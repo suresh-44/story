@@ -21,6 +21,7 @@ mongoose.connect(keys.mongoURI, {
   .catch(err => console.log(err))
 
 // Load routes
+const index = require('./router/index')
 const auth = require('./router/auth')
 
 // session middelware
@@ -46,6 +47,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // use routes
+app.use('/', index)
 app.use('/auth', auth)
 
 const port = process.env.PORT || 5000
