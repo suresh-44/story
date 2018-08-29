@@ -1,11 +1,18 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const passport = require('passport')
+const exphbs = require('express-handlebars')
 const errorhandler = require('errorhandler')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 
 var app = express()
+
+// handlebars middleware
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main'
+}))
+app.set('view engine', 'handlebars')
 
 // passport config
 require('./config/passport')(passport)

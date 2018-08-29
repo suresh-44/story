@@ -1,0 +1,44 @@
+<nav class="grey darken-3">
+  <div class="container top-nav">
+    <div class="nav-wrapper">
+      <a href="/stories" class="brand-logo center">StoryBook</a>
+      <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="fa fa-bars fa-2x"></i></a>
+      {{!--button-collapse , show-on-large --}} {{!-- RIGHT NAV --}}
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        {{#if user}}
+        <li><a href="/dashbord">welcome {{user.firstName}}</a></li>
+        <li><a href="/auth/logout"><i class="fa fa-sign-out"></i>Logout</a></li>
+        {{else}}
+        <li><a href="/stories"><i class="fa fa-book"></i> Public stories</a></li>
+        {{/if}}
+      </ul>
+
+      {{!-- SIDE MENU --}}
+      <!-- <ul class="side-nav" id="main-menu">
+        
+        <a href="/auth/google" class="btn red darken-1"><i class="fa fa-google left"></i>Login with Google</a>
+        
+      </ul> -->
+
+      <ul id="slide-out" style="width:300px;" class="sidenav fixed">
+        {{#if user}} {{else}}
+        <li>
+          <a href="/auth/google" class="btn red darken-1 center-block waves-effect waves-light"><i class="fa fa-google left"></i>Login
+            with Google
+          </a>
+        </li>
+        {{/if}}
+
+        <li><a href="/stories" class="waves-effect"><i class="fa fa-book"></i> Public stories</a></li>
+        {{#if user}}
+        <li class="divider"></li>
+        <li><a href="/dashbord" class="waves-effect"><i class="fa fa-cog"></i> Dashbord</a></li>
+        <li><a href="/stories/my" class="waves-effect"><i class="fa fa-user"></i>My stories</a></li>
+        <li><a href="/auth/logout" class="waves-effect"><i class="fa fa-sign-out"></i> Logout</a></li>
+        {{/if}}
+      </ul>
+
+
+    </div>
+  </div>
+</nav>
