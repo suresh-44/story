@@ -5,40 +5,72 @@ const exphbs = require('express-handlebars')
 const errorhandler = require('errorhandler')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 const path = require('path')
 
+// Load Models
+require('./models/User')
+require('./models/Story')
+
+// passport config
+require('./config/passport')(passport)
+
+// Load routes
+const index = require('./router/index')
+const auth = require('./router/auth')
+const stories = require('./router/stories')
+
+// Handelbars Helpers
+const {
+  truncate,
+  stripTags,
+  formatDate,
+  select,
+  editIcon
+} = require('./helper/hbs')
+
 var app = express()
+
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
+app.use(bodyParser.json())
+
+// method-override middleware
+app.use(methodOverride('_method'))
 
 // handlebars middleware
 app.engine(
   'handlebars',
   exphbs({
+    helpers: {
+      truncate,
+      stripTags,
+      formatDate,
+      select,
+      editIcon
+    },
     defaultLayout: 'main'
   })
 )
 app.set('view engine', 'handlebars')
 
-// passport config
-require('./config/passport')(passport)
 
 // load keys
 const keys = require('./config/keys')
 
+
 // mongoose
 mongoose
   .connect(
-    keys.mongoURI,
-    {
+    keys.mongoURI, {
       useNewUrlParser: true
     }
   )
   .then(() => console.log('connected to database..'))
   .catch(err => console.log(err))
 
-// Load routes
-const index = require('./router/index')
-const auth = require('./router/auth')
-const stories = require('./router/stories')
 
 // session middelware
 app.use(cookieParser())
